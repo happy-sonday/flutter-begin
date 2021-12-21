@@ -7,7 +7,7 @@ class User {
       {required this.backgroundImage, required this.name, required this.intro});
 }
 
-final String _urlPrefix = "assets/profile_";
+const String _urlPrefix = "assets/profile_";
 
 User me = User(
     backgroundImage: "${_urlPrefix}me.jpg",
