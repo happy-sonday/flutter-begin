@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_haplix/screen/home_screen.dart';
 import 'package:flutter_haplix/widget/bottom_bar.dart';
 
 void main(List<String> args) {
@@ -29,11 +30,7 @@ class _MyAppState extends State<MyApp> {
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
-              Container(
-                child: Center(
-                  child: Text("home"),
-                ),
-              ),
+              HomeScreen(),
               Container(
                 child: Center(
                   child: Text("search"),
