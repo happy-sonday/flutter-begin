@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_haplix/model/model_movie.dart';
+import 'package:flutter_haplix/widget/box_slider.dart';
 import 'package:flutter_haplix/widget/carousel_slider.dart';
+import 'package:flutter_haplix/widget/circle_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -58,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const TopBar(),
           ],
-        )
+        ),
+        CircleSlider(movies: movies),
+        BoxSlider(movies: movies)
       ],
     );
   }
