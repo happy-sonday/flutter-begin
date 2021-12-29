@@ -7,13 +7,23 @@ class BottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.black,
-        child: Container(
+        child: const SizedBox(
           height: 50,
           child: TabBar(
             indicatorColor: Colors.transparent,
             labelColor: Colors.white,
             unselectedLabelColor: Colors.white60,
             tabs: [
+              Tab(
+                icon: Icon(
+                  Icons.home,
+                  size: 18,
+                ),
+                child: Text(
+                  "홈",
+                  style: TextStyle(fontSize: 9),
+                ),
+              ),
               Tab(
                 icon: Icon(
                   Icons.search,
@@ -41,16 +51,6 @@ class BottomBar extends StatelessWidget {
                 ),
                 child: Text(
                   "더보기",
-                  style: TextStyle(fontSize: 9),
-                ),
-              ),
-              Tab(
-                icon: Icon(
-                  Icons.home,
-                  size: 18,
-                ),
-                child: Text(
-                  "홈",
                   style: TextStyle(fontSize: 9),
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_haplix/screen/home_screen.dart';
+import 'package:flutter_haplix/screen/more_screnn.dart';
 import 'package:flutter_haplix/widget/bottom_bar.dart';
 
 void main(List<String> args) {
@@ -41,11 +42,12 @@ class _MyAppState extends State<MyApp> {
                   child: Text("saved"),
                 ),
               ),
-              Container(
-                child: Center(
-                  child: Text("more"),
-                ),
-              ),
+              // Container(
+              //   child: Center(
+              //     child: Text("more"),
+              //   ),
+              // ),
+              MoreScreen()
             ],
           ),
           bottomNavigationBar: BottomBar(),
