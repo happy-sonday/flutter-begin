@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SecondDetail extends StatelessWidget {
-  const SecondDetail({Key? key}) : super(key: key);
+  TextEditingController controller = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +11,20 @@ class SecondDetail extends StatelessWidget {
       ),
       body: Container(
         child: Center(
-          child: ElevatedButton(
-            child: Text("세 번째 페이지로 가기"),
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/third');
-            },
-          ),
-        ),
+            child: Column(
+          children: <Widget>[
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.text,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(controller.value.text);
+              },
+              child: const Text("저장하기"),
+            )
+          ],
+        )),
       ),
     );
   }

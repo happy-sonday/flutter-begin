@@ -44,9 +44,20 @@ class _SubDetailState extends State<SubDetail> {
         itemCount: todoList.length,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _addNavigation(context);
+        },
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  void _addNavigation(BuildContext context) async {
+    final result = await Navigator.of(context).pushNamed('/second');
+    setState(() {
+      if (result != null) {
+        todoList.add(result as String);
+      }
+    });
   }
 }
