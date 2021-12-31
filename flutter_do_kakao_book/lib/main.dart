@@ -1,10 +1,10 @@
-import 'dart:io';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: "assets/.env");
   runApp(const MyApp());
 }
 
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var url = 'https://dapi.kakao.com/v3/search/book?target=title&query=doit';
 
     var response = await http.get(Uri.parse(url),
-        headers: {"Authorization": "KakaoAK c92aeac4517ba2450195e64d551e2c72"});
+        headers: {"Authorization": "KakaoAK ${dotenv.env['kakaoAPI']}"});
 
     //print(response.body); // 검색 결과 로그창으로 확인
     setState(() {
