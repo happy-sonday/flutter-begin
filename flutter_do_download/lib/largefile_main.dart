@@ -11,17 +11,35 @@ class LargefileMain extends StatefulWidget {
 }
 
 class _LargefileMainState extends State<LargefileMain> {
-  final imgUrl =
-      "https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg?auto=compress";
+  // final imgUrl =
+  //     "https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg?auto=compress";
 
   bool downloading = false;
   var progressingString = "";
   String file = "";
+  TextEditingController? _editingController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _editingController = new TextEditingController(
+        // 초기 구동 시 기본 입력값 설정
+        text:
+            "https://images.pexels.com/photos/240040/pexels-photo-240040.jpeg?auto=compress");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Large File Download"),
+        // title: const Text("Large File Download"),
+        title: TextField(
+          controller: _editingController,
+          style: TextStyle(color: Colors.white),
+          keyboardType: TextInputType.text,
+          decoration: InputDecoration(hintText: 'url 입력하세요'),
+        ),
       ),
       body: Center(
           child: downloading
@@ -108,7 +126,9 @@ class _LargefileMainState extends State<LargefileMain> {
       // NOTE: path_provider 패키지가 제공하느 함수
       // dio.download를 이용해 url에 담긴 주소에서 파일을 내려받고, 내부 디렉토리에 my.image.jpg이름으로 저장
       var dir = await getApplicationDocumentsDirectory();
-      await dio.download(imgUrl, "${dir.path}/myimage.jpg",
+      //await dio.download(imgUrl, "${dir.path}/myimage.jpg",
+      await dio.download(
+          _editingController!.value.text, "${dir.path}/myimage.jpg",
 
           /**
        * 데이터를 받을 때마다 onReceiveProgress함수를 실행해 진행 상황을 표시
