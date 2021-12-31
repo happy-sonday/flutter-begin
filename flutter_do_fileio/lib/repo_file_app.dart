@@ -98,7 +98,12 @@ class _RepoFileAppState extends State<RepoFileApp> {
         )),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          writeDrama(controller.value.text);
+          setState(() {
+            itemList.add(controller.value.text);
+          });
+        },
         child: const Icon(Icons.add),
       ),
     );
@@ -125,5 +130,13 @@ class _RepoFileAppState extends State<RepoFileApp> {
     } catch (e) {
       print(e.toString());
     }
+  }
+
+  void writeDrama(String drama) async {
+    var dir = await getApplicationDocumentsDirectory();
+    var file = await File(dir.path + '/drama.txt').readAsString();
+
+    file = file + '\n' + drama;
+    File(dir.path + '/drama.txt').writeAsStringSync(file);
   }
 }
