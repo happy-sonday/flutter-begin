@@ -42,14 +42,65 @@ class _DatabaseAppState extends State<DatabaseApp> {
                           itemCount: (snapshot.data as List<Todo>).length,
                           itemBuilder: (context, index) {
                             Todo todo = (snapshot.data as List<Todo>)[index];
-                            return Card(
-                              child: Column(
-                                children: [
-                                  Text(todo.title!),
-                                  Text(todo.content!),
-                                  Text(todo.active == 1 ? 'true' : 'false'),
-                                ],
+                            // return Card(
+                            //   child: Column(
+                            //     children: [
+                            //       Text(todo.title!),
+                            //       Text(todo.content!),
+                            //       Text(todo.active == 1 ? 'true' : 'false'),
+                            //     ],
+                            //   ),
+                            // );
+                            return ListTile(
+                              title: Text(
+                                todo.title!,
+                                style: const TextStyle(fontSize: 20),
                               ),
+                              subtitle: Container(
+                                child: Column(
+                                  children: [
+                                    Text(todo.content!),
+                                    Text(
+                                        "체크 : ${todo.active == 1 ? 'true' : 'false'}"),
+                                    Container(
+                                      height: 1,
+                                      color: Colors.blue,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              onTap: () async {
+                                Todo result = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("${todo.id}: ${todo.title}"),
+                                        content: const Text("Todo를 체크하시겠습니까?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  todo.active == 1
+                                                      ? todo.active = 0
+                                                      : todo.active = 1;
+                                                });
+                                                Navigator.of(context).pop(todo);
+                                              },
+                                              child: const Text("예")),
+                                          TextButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  Navigator.of(context)
+                                                      .pop(todo);
+                                                });
+                                              },
+                                              child: const Text("아니오")),
+                                        ],
+                                      );
+                                    });
+                                _updateTodo(result);
+                              },
                             );
                           });
                     } else {
@@ -80,6 +131,16 @@ class _DatabaseAppState extends State<DatabaseApp> {
     await database.insert('todos', todo.toMap(),
         //NOTE: 새로 등록하려는 데이터 id값이 같을 경우 교체
         conflictAlgorithm: ConflictAlgorithm.replace);
+    setState(() {
+      todoList = getTodos();
+    });
+  }
+
+  void _updateTodo(Todo todo) async {
+    final Database database = await widget.db;
+    await database
+        .update('todos', todo.toMap(), where: 'id=?', whereArgs: [todo.id]);
+
     setState(() {
       todoList = getTodos();
     });
