@@ -110,6 +110,33 @@ class _DatabaseAppState extends State<DatabaseApp> {
                                     });
                                 _updateTodo(result);
                               },
+                              onLongPress: () async {
+                                dynamic result = await showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title:
+                                            Text("${todo.id}: ${todo.title}"),
+                                        content:
+                                            Text("${todo.content}를 삭제하시겠습니까?"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop(todo);
+                                              },
+                                              child: const Text("예")),
+                                          TextButton(
+                                              onPressed: () {
+                                                // 반환값이 null로 넘어가 throw 에러 발생
+                                                Navigator.of(context).pop('');
+                                              },
+                                              child: const Text("아니오"))
+                                        ],
+                                      );
+                                    });
+                                // Todo의 타입일때 삭제
+                                if (result is Todo) _deleteTodo(result);
+                              },
                             );
                           });
                     } else {
@@ -128,7 +155,7 @@ class _DatabaseAppState extends State<DatabaseApp> {
             _insertTodo(todo as Todo);
           }
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -150,6 +177,14 @@ class _DatabaseAppState extends State<DatabaseApp> {
     await database
         .update('todos', todo.toMap(), where: 'id=?', whereArgs: [todo.id]);
 
+    setState(() {
+      todoList = getTodos();
+    });
+  }
+
+  void _deleteTodo(Todo todo) async {
+    final Database database = await widget.db;
+    await database.delete('todos', where: 'id=?', whereArgs: [todo.id]);
     setState(() {
       todoList = getTodos();
     });
