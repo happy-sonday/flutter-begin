@@ -49,7 +49,8 @@ class _DatabaseAppState extends State<DatabaseApp> {
                 case ConnectionState.active:
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData &&
+                      (snapshot.data as List<Todo>).isNotEmpty) {
                     return ListView.builder(
                         itemCount: (snapshot.data as List<Todo>).length,
                         itemBuilder: (context, index) {
@@ -149,7 +150,7 @@ class _DatabaseAppState extends State<DatabaseApp> {
                           );
                         });
                   } else {
-                    return const Text("No data");
+                    return const Text("검색 결과 없음");
                   }
               }
             },

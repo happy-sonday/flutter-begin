@@ -36,7 +36,8 @@ class _ClearListState extends State<ClearList> {
                 case ConnectionState.active:
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData &&
+                      (snapshot.data as List<Todo>).length != 0) {
                     return ListView.builder(
                         itemCount: (snapshot.data as List<Todo>).length,
                         itemBuilder: (context, index) {
@@ -66,7 +67,44 @@ class _ClearListState extends State<ClearList> {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("완료한 일 삭제"),
+                content: const Text("완료한 일을 모두 삭제할까요>"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: const Text("예")),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: const Text("아니오")),
+                ],
+              );
+            },
+          );
+          if (result) {
+            _removeAllTodos();
+          }
+        },
+        child: const Icon(Icons.remove),
+      ),
     );
+  }
+
+  void _removeAllTodos() async {
+    final Database database = await widget.database;
+    database.rawDelete('delete from todos where active=1');
+    setState(() {
+      clearList = getClearList();
+    });
   }
 
   Future<List<Todo>> getClearList() async {
