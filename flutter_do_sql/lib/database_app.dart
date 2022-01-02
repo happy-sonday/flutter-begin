@@ -70,13 +70,20 @@ class _DatabaseAppState extends State<DatabaseApp> {
                                 ),
                               ),
                               onTap: () async {
+                                TextEditingController controller =
+                                    TextEditingController(text: todo.content);
+
                                 Todo result = await showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title:
                                             Text("${todo.id}: ${todo.title}"),
-                                        content: const Text("Todo를 체크하시겠습니까?"),
+                                        // content: const Text("Todo를 체크하시겠습니까?"),
+                                        content: TextField(
+                                          controller: controller,
+                                          keyboardType: TextInputType.text,
+                                        ),
                                         actions: [
                                           TextButton(
                                               onPressed: () {
@@ -84,6 +91,8 @@ class _DatabaseAppState extends State<DatabaseApp> {
                                                   todo.active == 1
                                                       ? todo.active = 0
                                                       : todo.active = 1;
+                                                  todo.content =
+                                                      controller.value.text;
                                                 });
                                                 Navigator.of(context).pop(todo);
                                               },
