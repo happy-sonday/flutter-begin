@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_do_sql/clear_list.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) => DatabaseApp(database),
-        "/add": (context) => AddTodoApp(database)
+        "/add": (context) => AddTodoApp(database),
+        "/clear": (context) => ClearList(database)
       },
     );
   }
