@@ -157,17 +157,41 @@ class _DatabaseAppState extends State<DatabaseApp> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final todo = await Navigator.of(context).pushNamed('/add');
-          if (todo != null) {
-            _insertTodo(todo as Todo);
-          }
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            onPressed: () async {
+              final todo = await Navigator.of(context).pushNamed('/add');
+              if (todo != null) {
+                _insertTodo(todo as Todo);
+              }
+            },
+            heroTag: null,
+            child: const Icon(Icons.add),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          FloatingActionButton(
+            onPressed: () async {
+              _allUpdate();
+            },
+            heroTag: null,
+            child: const Icon(Icons.update),
+          ),
+        ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
+  }
+
+  void _allUpdate() async {
+    final Database database = await widget.db;
+    await database.rawUpdate('update todos set active = 1 where active = 0');
+    setState(() {
+      todoList = getTodos();
+    });
   }
 
   void _insertTodo(Todo todo) async {

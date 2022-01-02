@@ -37,7 +37,7 @@ class _ClearListState extends State<ClearList> {
                   return const CircularProgressIndicator();
                 case ConnectionState.done:
                   if (snapshot.hasData &&
-                      (snapshot.data as List<Todo>).length != 0) {
+                      (snapshot.data as List<Todo>).isNotEmpty) {
                     return ListView.builder(
                         itemCount: (snapshot.data as List<Todo>).length,
                         itemBuilder: (context, index) {
