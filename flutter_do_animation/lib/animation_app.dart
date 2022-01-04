@@ -11,6 +11,7 @@ class AnimationApp extends StatefulWidget {
 class _AnimationAppState extends State<AnimationApp> {
   List<People> peoples = List.empty(growable: true);
   int current = 0;
+  double _opacity = 1;
   Color weightColor = Colors.blue;
 
   @override
@@ -35,51 +36,55 @@ class _AnimationAppState extends State<AnimationApp> {
         child: Center(
           child: Column(
             children: [
-              SizedBox(
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 100,
-                      child: Text('이름: ${peoples[current].name}'),
-                    ),
-                    AnimatedContainer(
-                      duration: const Duration(seconds: 2),
-                      curve: Curves.easeInCubic,
-                      color: Colors.amber,
-                      child: Text(
-                        "키: ${peoples[current].height}",
-                        textAlign: TextAlign.center,
+              AnimatedOpacity(
+                opacity: _opacity,
+                duration: Duration(seconds: 1),
+                child: SizedBox(
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 100,
+                        child: Text('이름: ${peoples[current].name}'),
                       ),
-                      width: 50,
-                      height: peoples[current].height,
-                    ),
-                    AnimatedContainer(
-                      duration: Duration(seconds: 2),
-                      curve: Curves.easeInCubic,
-                      color: weightColor,
-                      child: Text(
-                        "몸무게 ${peoples[current].weight}",
-                        textAlign: TextAlign.center,
+                      AnimatedContainer(
+                        duration: const Duration(seconds: 2),
+                        curve: Curves.easeInCubic,
+                        color: Colors.amber,
+                        child: Text(
+                          "키: ${peoples[current].height}",
+                          textAlign: TextAlign.center,
+                        ),
+                        width: 50,
+                        height: peoples[current].height,
                       ),
-                      width: 50,
-                      height: peoples[current].weight,
-                    ),
-                    AnimatedContainer(
-                      duration: Duration(seconds: 2),
-                      curve: Curves.linear,
-                      color: Colors.pinkAccent,
-                      child: Text(
-                        "bmi ${peoples[current].bmi.toString().substring(0, 2)}",
-                        textAlign: TextAlign.center,
+                      AnimatedContainer(
+                        duration: Duration(seconds: 2),
+                        curve: Curves.easeInCubic,
+                        color: weightColor,
+                        child: Text(
+                          "몸무게 ${peoples[current].weight}",
+                          textAlign: TextAlign.center,
+                        ),
+                        width: 50,
+                        height: peoples[current].weight,
                       ),
-                      width: 50,
-                      height: peoples[current].bmi,
-                    ),
-                  ],
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                      AnimatedContainer(
+                        duration: Duration(seconds: 2),
+                        curve: Curves.linear,
+                        color: Colors.pinkAccent,
+                        child: Text(
+                          "bmi ${peoples[current].bmi.toString().substring(0, 2)}",
+                          textAlign: TextAlign.center,
+                        ),
+                        width: 50,
+                        height: peoples[current].bmi,
+                      ),
+                    ],
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                  ),
+                  height: 200,
                 ),
-                height: 200,
               ),
               ElevatedButton(
                   onPressed: () {
@@ -101,6 +106,13 @@ class _AnimationAppState extends State<AnimationApp> {
                     });
                   },
                   child: const Text('이전')),
+              ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _opacity == 1 ? _opacity = 0 : _opacity = 1;
+                    });
+                  },
+                  child: const Text("Fade 효과"))
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
