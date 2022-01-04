@@ -9,7 +9,8 @@ class NativeApp extends StatefulWidget {
 }
 
 class _NativeAppState extends State<NativeApp> {
-  static const platform = const MethodChannel('com.flutter.dev/info');
+  static const platform = MethodChannel('com.flutter.dev/info');
+  static const platform3 = MethodChannel('com.flutter.dev/dialog');
   String _deviceInfo = 'Unknown info';
 
   @override
@@ -19,9 +20,18 @@ class _NativeAppState extends State<NativeApp> {
         title: const Text("Native 통신"),
       ),
       body: Center(
-        child: Text(
-          _deviceInfo,
-          style: const TextStyle(fontSize: 30),
+        child: Column(
+          children: [
+            Text(
+              _deviceInfo,
+              style: const TextStyle(fontSize: 30),
+            ),
+            TextButton(
+                onPressed: () {
+                  _showDialo();
+                },
+                child: const Text('네이티브 창 열기'))
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -46,5 +56,11 @@ class _NativeAppState extends State<NativeApp> {
     setState(() {
       _deviceInfo = deviceInfo;
     });
+  }
+
+  Future<void> _showDialo() async {
+    try {
+      await platform3.invokeMethod('showDialog');
+    } on PlatformException catch (e) {}
   }
 }
