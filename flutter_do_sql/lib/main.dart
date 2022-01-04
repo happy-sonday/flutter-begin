@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
     Future<Database> database = initDatabase();
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'sql Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
