@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_do_animation/people.dart';
+import 'package:flutter_do_animation/second-page.dart';
 
 class AnimationApp extends StatefulWidget {
   const AnimationApp({Key? key}) : super(key: key);
@@ -112,7 +113,21 @@ class _AnimationAppState extends State<AnimationApp> {
                       _opacity == 1 ? _opacity = 0 : _opacity = 1;
                     });
                   },
-                  child: const Text("Fade 효과"))
+                  child: const Text("Fade 효과")),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SecondPage()));
+                },
+                child: SizedBox(
+                    width: 200,
+                    child: Row(
+                      children: const [
+                        Hero(tag: 'detail', child: Icon(Icons.cake)),
+                        Text("이동하기")
+                      ],
+                    )),
+              ),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
           ),
