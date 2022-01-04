@@ -11,15 +11,17 @@ class AnimationApp extends StatefulWidget {
 class _AnimationAppState extends State<AnimationApp> {
   List<People> peoples = List.empty(growable: true);
   int current = 0;
+  Color weightColor = Colors.blue;
 
   @override
   void initState() {
     // TODO: implement initState
-    peoples.add(People('해피', 165, 60));
+    peoples.add(People('해피', 120, 39));
     peoples.add(People('손데이', 174, 70));
     peoples.add(People('누수노시뇽', 164, 53));
-    peoples.add(People('페이커', 170, 100));
+    peoples.add(People('페이커', 170, 62));
     peoples.add(People('클로저', 100, 80));
+    peoples.add(People('잠만보', 120, 150));
     super.initState();
   }
 
@@ -54,7 +56,7 @@ class _AnimationAppState extends State<AnimationApp> {
                     AnimatedContainer(
                       duration: Duration(seconds: 2),
                       curve: Curves.easeInCubic,
-                      color: Colors.blue,
+                      color: weightColor,
                       child: Text(
                         "몸무게 ${peoples[current].weight}",
                         textAlign: TextAlign.center,
@@ -84,6 +86,7 @@ class _AnimationAppState extends State<AnimationApp> {
                     setState(() {
                       if (current < peoples.length - 1) {
                         current++;
+                        _changeWeightColor(peoples[current].weight);
                       }
                     });
                   },
@@ -93,6 +96,7 @@ class _AnimationAppState extends State<AnimationApp> {
                     setState(() {
                       if (current > 0) {
                         current--;
+                        _changeWeightColor(peoples[current].weight);
                       }
                     });
                   },
@@ -103,5 +107,17 @@ class _AnimationAppState extends State<AnimationApp> {
         ),
       ),
     );
+  }
+
+  void _changeWeightColor(double weight) {
+    if (weight < 40) {
+      weightColor = Colors.blueAccent;
+    } else if (weight < 60) {
+      weightColor = Colors.indigo;
+    } else if (weight < 80) {
+      weightColor = Colors.orange;
+    } else {
+      weightColor = Colors.red;
+    }
   }
 }
