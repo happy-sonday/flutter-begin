@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_do_animation/people.dart';
 import 'package:flutter_do_animation/second-page.dart';
+import 'package:flutter_do_animation/sliver_advanced_page.dart';
+import 'package:flutter_do_animation/sliver_page.dart';
 
 class AnimationApp extends StatefulWidget {
   const AnimationApp({Key? key}) : super(key: key);
@@ -127,6 +129,14 @@ class _AnimationAppState extends State<AnimationApp> {
                         Text("이동하기")
                       ],
                     )),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const SliverPage()));
+                  //builder: (context) => const SliverAdvancedPage()));
+                },
+                child: const Text("Sliver 페이지 이동"),
               ),
             ],
             mainAxisAlignment: MainAxisAlignment.center,
