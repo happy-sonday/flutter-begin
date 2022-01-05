@@ -1,10 +1,13 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_do_firebase/memo_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'firebase_app.dart';
 
 Future<void> main() async {
+  await dotenv.load(fileName: ".env");
   runApp(MyApp());
 }
 
@@ -21,7 +24,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FirebaseApp(analytics: analytics, observer: observer),
+      //home: FirebaseApp(analytics: analytics, observer: observer),
+      home: const MemoPage(),
     );
   }
 }
