@@ -1,5 +1,6 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_do_firebase/memoDetail.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'memo.dart';
@@ -42,10 +43,10 @@ class _MemoPageState extends State<MemoPage> {
       ),
       body: Container(
         child: Center(
-          child: memos.length == 0
-              ? CircularProgressIndicator()
+          child: memos.isEmpty
+              ? const CircularProgressIndicator()
               : GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2),
                   itemBuilder: (context, index) {
                     return Card(
@@ -54,11 +55,50 @@ class _MemoPageState extends State<MemoPage> {
                           padding: const EdgeInsets.only(top: 20, bottom: 20),
                           child: SizedBox(
                             child: GestureDetector(
-                              onTap: () {
-                                // 상세보기 화면 이동
+                              // 상세보기 화면 이동
+                              onTap: () async {
+                                Memo? memo = await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            MemoDetailPage(
+                                                reference!, memos[index])));
+
+                                if (memo != null) {
+                                  setState(() {
+                                    memos[index].title = memo.title;
+                                    memos[index].title = memo.content;
+                                  });
+                                }
                               },
+                              // 작성 메모 삭제
                               onLongPress: () {
-                                // 작성 메모 삭제
+                                showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                          title: Text(memos[index].title),
+                                          content: const Text("삭제 하시겠습니까?"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  reference!
+                                                      .child(memos[index].key!)
+                                                      .remove()
+                                                      .then((value) {
+                                                    setState(() {
+                                                      memos.removeAt(index);
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    });
+                                                  });
+                                                },
+                                                child: const Text("예")),
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: const Text("아니오"))
+                                          ],
+                                        ));
                               },
                               child: Text(memos[index].content),
                             ),
@@ -78,7 +118,7 @@ class _MemoPageState extends State<MemoPage> {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => MemoAddPage(reference!)));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
