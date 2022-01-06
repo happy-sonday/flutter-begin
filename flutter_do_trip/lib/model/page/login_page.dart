@@ -7,6 +7,7 @@ import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_do_trip/model/user.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   FirebaseDatabase? _database;
   DatabaseReference? reference;
-  String _databaseUrl = "DB_URL";
+  final String? _databaseUrl = dotenv.env["DB_URL"];
 
   double opacity = 0;
   AnimationController? _animationController;

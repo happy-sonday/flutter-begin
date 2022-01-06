@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../user.dart';
 
@@ -16,7 +17,7 @@ class SignPage extends StatefulWidget {
 class _SignPageState extends State<SignPage> {
   FirebaseDatabase? _database;
   DatabaseReference? reference;
-  String _databaseUrl = "DB_URL";
+  final String? _databaseUrl = dotenv.env["DB_URL"];
 
   TextEditingController? _idTextController;
   TextEditingController? _pwTextController;
@@ -24,7 +25,6 @@ class _SignPageState extends State<SignPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _idTextController = TextEditingController();
     _pwTextController = TextEditingController();
