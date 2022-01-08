@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_do_trip/model/page/login_page.dart';
+import 'package:flutter_do_trip/model/page/main_page.dart';
 import 'package:flutter_do_trip/model/page/sign_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const LoginPage(),
         '/sign': (context) => const SignPage(),
+        '/main': (context) => const MainPage(),
       },
     );
   }
