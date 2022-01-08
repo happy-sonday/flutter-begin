@@ -1,8 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_do_trip/model/page/favorite_page.dart';
-import 'package:flutter_do_trip/model/page/map_page.dart';
-import 'package:flutter_do_trip/model/page/setting_page.dart';
+import 'package:flutter_do_trip/page/favorite_page.dart';
+import 'package:flutter_do_trip/page/map_page.dart';
+import 'package:flutter_do_trip/page/setting_page.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class MainPage extends StatefulWidget {

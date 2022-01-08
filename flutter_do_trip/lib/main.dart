@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_do_trip/model/page/login_page.dart';
-import 'package:flutter_do_trip/model/page/main_page.dart';
-import 'package:flutter_do_trip/model/page/sign_page.dart';
+import 'package:flutter_do_trip/page/login_page.dart';
+import 'package:flutter_do_trip/page/main_page.dart';
+import 'package:flutter_do_trip/page/sign_page.dart';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future main() async {

@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_do_trip/model/user.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
-import '../user.dart';
 
 class SignPage extends StatefulWidget {
   const SignPage({Key? key}) : super(key: key);
