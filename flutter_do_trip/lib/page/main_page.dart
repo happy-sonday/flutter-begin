@@ -15,10 +15,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
+  final String? _dataBaseURL = dotenv.env['DB_URL'];
   TabController? controller;
   FirebaseDatabase? _database;
   DatabaseReference? reference;
-  String? _dataBaseURL = dotenv.env['DB_URL'];
   String? id;
 
   @override
@@ -41,7 +41,11 @@ class _MainPageState extends State<MainPage>
     id = ModalRoute.of(context)!.settings.arguments as String?;
     return Scaffold(
         body: TabBarView(
-          children: [MapPage(), FavoritePage(), SettingPage()],
+          children: [
+            MapPage(databaseReference: reference, id: id),
+            FavoritePage(),
+            SettingPage()
+          ],
           controller: controller,
         ),
         bottomNavigationBar: TabBar(

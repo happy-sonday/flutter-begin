@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 
 import 'package:sqflite/sqflite.dart';
 
+import 'tour_detail_page.dart';
+
 class MapPage extends StatefulWidget {
   final DatabaseReference? databaseReference; // 실시간 데이터베이스 변수
   final Future<Database>? db; // 내부에 저장되는 데이터베이스
@@ -148,7 +150,15 @@ class _MapPage extends State<MapPage> {
                         )
                       ],
                     ),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => TourDetailPage(
+                                id: widget.id,
+                                tour: tourData[index],
+                                index: index,
+                                databaseReference: widget.databaseReference,
+                              )));
+                    },
                     onDoubleTap: () {},
                   ),
                 );
