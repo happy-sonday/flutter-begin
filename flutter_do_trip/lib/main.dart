@@ -61,6 +61,7 @@ class MyApp extends StatelessWidget {
 
               if (snapshot.connectionState == ConnectionState.done) {
                 _initFirebaseMessaging(context);
+                //_getToken();
                 return const LoginPage();
               }
 
@@ -98,6 +99,10 @@ class MyApp extends StatelessWidget {
       }
     });
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {});
+  }
+
+  _getToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
   }
 
   Future<bool?> _loadData() async {

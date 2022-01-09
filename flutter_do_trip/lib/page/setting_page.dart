@@ -70,7 +70,6 @@ class _SettingPageState extends State<SettingPage> {
                   actions: <Widget>[
                     TextButton(
                         onPressed: () {
-                          print(widget.id);
                           widget.databaseReference!
                               .child('user')
                               .child(widget.id!)
