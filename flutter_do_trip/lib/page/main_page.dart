@@ -5,9 +5,12 @@ import 'package:flutter_do_trip/page/map_page.dart';
 import 'package:flutter_do_trip/page/setting_page.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:sqflite/sqflite.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final Future<Database> database;
+
+  MainPage(this.database);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -42,8 +45,16 @@ class _MainPageState extends State<MainPage>
     return Scaffold(
         body: TabBarView(
           children: [
-            MapPage(databaseReference: reference, id: id),
-            FavoritePage(),
+            MapPage(
+              databaseReference: reference,
+              id: id,
+              db: widget.database,
+            ),
+            FavoritePage(
+              databaseReference: reference,
+              id: id,
+              db: widget.database,
+            ),
             SettingPage()
           ],
           controller: controller,

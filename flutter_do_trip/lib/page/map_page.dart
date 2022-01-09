@@ -159,7 +159,9 @@ class _MapPage extends State<MapPage> {
                                 databaseReference: widget.databaseReference,
                               )));
                     },
-                    onDoubleTap: () {},
+                    onDoubleTap: () {
+                      insertTour(widget.db!, tourData[index]);
+                    },
                   ),
                 );
               },
@@ -217,5 +219,15 @@ class _MapPage extends State<MapPage> {
     } else {
       print('error');
     }
+  }
+
+  // 즐겨찾기가 추가되고 하단 메시지창으로 잠시 보였다 사라지는 스낵바 메시지 생성
+  void insertTour(Future<Database> db, Tour info) async {
+    final Database database = await db;
+    await database
+        .insert('place', info.toMap(),
+            conflictAlgorithm: ConflictAlgorithm.replace)
+        .then((value) => ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("즐겨찾기에 추가되었습니다."))));
   }
 }
